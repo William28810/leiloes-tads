@@ -13,6 +13,7 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProdutosDAO {
@@ -26,7 +27,7 @@ public class ProdutosDAO {
         
         
         //conn = new conectaDAO().connectDB();
-        String sql = "INSERT INTO produto (id, nome, valor, status) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO produtos (id, nome, valor, status) VALUES(?,?,?,?)";
         
         try{
             prep = conn.prepareStatement(sql);
@@ -50,6 +51,29 @@ public class ProdutosDAO {
     }
     
     public ArrayList<ProdutosDTO> listarProdutos(){
+        
+        List<ProdutosDTO> lista = new ArrayList<>();
+        String sql = "SELECT * FROM produtos";
+
+        try {
+            prep = conn.prepareStatement(sql);
+            resultset = prep.executeQuery();
+
+            while (resultset.next()) {
+
+                ProdutosDTO produto = new ProdutosDTO();
+
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("status"));
+
+                lista.add(produto);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         return listagem;
     }
