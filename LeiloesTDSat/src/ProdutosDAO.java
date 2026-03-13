@@ -26,6 +26,25 @@ public class ProdutosDAO {
         
         
         //conn = new conectaDAO().connectDB();
+        String sql = "INSERT INTO produto (id, nome, valor, status) VALUES(?,?,?,?)";
+        
+        try{
+            prep = conn.prepareStatement(sql);
+            
+            prep.setInt(1, produto.getId());
+            prep.setString(2, produto.getNome());
+            prep.setInt(3, produto.getValor());
+            prep.setString(4, produto.getStatus());
+            
+            prep.executeUpdate();
+            
+            prep.close();
+            conn.close();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
         
         
     }
