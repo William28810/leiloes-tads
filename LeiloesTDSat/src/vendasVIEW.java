@@ -96,13 +96,35 @@ public class vendasVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
+        listarProdutosVendidos();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void listarProdutosVendidos(){
+        try{
+            ProdutosDAO dao = new ProdutosDAO();
+            ArrayList<ProdutosDTO> lista = dao.listarProdutosVendidos();
+            
+            DefaultTableModel model = (DefaultTableModel) tabelaVendas.getModel();
+            model.setNumRows(0);
+            
+            for(int i = 0; i < lista.size(); i++){
+                model.addRow(new Object[]{
+                    lista.get(i).getId(),
+                    lista.get(i).getNome(),
+                    lista.get(i).getValor(),
+                    lista.get(i).getStatus()
+                });
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao listar produtos vendidos");
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
